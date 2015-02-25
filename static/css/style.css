@@ -1,0 +1,35 @@
+body {
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+
+.hero-unit img {
+	width: 300px;
+	padding-right: 30px;
+	margin-top: -10px;
+	float: left;
+}
+
+.hero-unit p {
+	padding-top: 10px;
+}
+
+.clear {
+	clear: both;
+}
+#image-result {
+	text-align: center;
+}
+
+#form-alert {
+	display: none;
+}
+
+#refresh, #save {
+	margin: 10px;
+}
+
+#form-remainder {
+	display:none;
+}
