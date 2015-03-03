@@ -12,25 +12,25 @@ resolutions = {
 		'width': 640,
 		'height': 960,
 		'columns': 4,
-		'padding': 5
+		'padding': 0
 		},
 	'iphone':  {
 		'width': 320, 
 		'height': 480, 
 		'columns': 3,
-		'padding': 5
+		'padding': 0
 		},
 	'ipad': {
 		'width': 768, 
 		'height': 1024, 
 		'columns': 4,
-		'padding': 10
+		'padding': 0
 	},
 	'ipad3': {
 		'width': 1536, 
 		'height': 2048, 
 		'columns': 8,
-		'padding': 10
+		'padding': 0
 	}
 }
 
@@ -85,8 +85,8 @@ def return_image(user, board, seed, template):
 		img_width = int(dimensions[0])
 		img_height = int(dimensions[1])
 		thumb_width = 180
-		padding = 20
-		columns = int(math.ceil((img_width + padding) / thumb_width))
+		padding = 0
+		columns = int(math.ceil((img_width + padding) / float(thumb_width)))
 	thumb_max_height = 500
 	urls = get_image_urls(user, board, seed)
 	if not isinstance(urls, list):

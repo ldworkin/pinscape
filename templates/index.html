@@ -1,234 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Pinterest Collages</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	
-	<!-- Le styles -->
-	<link href="static/css/bootstrap.min.css" rel="stylesheet">
-	<link href="static/css/style.css" rel="stylesheet">
-	<link href="static/css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="static/css/ui-lightness/jquery-ui-1.8.18.custom.css" rel="stylesheet" />	
+  <head>
+    <meta charset="utf-8">
+    <title>Pinterest Collages</title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+    <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="static/css/ui-lightness/jquery-ui-1.8.18.custom.css" rel="stylesheet" />	
+  </head>
 
-	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-	<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	
-	<!-- Le fav and touch icons -->
-	<link rel="shortcut icon" href="images/favicon.ico">
-	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-</head>
+  <body>
+    <div class="container">
+      
+      <div class="hero-unit">
+	<img src="static/img/Pinterest_Logo.png">
+	<h1>Collages</h1>
+	<div class="clear"></div>
+	<p>Create collages out of Pinterest images to use as wallpaper for your computer, iPhone, or iPad. Simply enter the username of any Pinterest user to begin.</p>
+      </div>
 
-<body>
-	<div class="container">
-		
-		<div class="hero-unit">
-			<img src='static/img/Pinterest_Logo.png'/>
-			<h1>Collages</h1>
-			<div class="clear"></div>
-			<p>Create collages out of Pinterest images to use as wallpaper for your computer, iPhone, or iPad. Simply enter the username of any Pinterest user to begin.</p>
-		</div>
+      <form class="well form-horizontal">
 
-		<form class="well form-horizontal">
+	<fieldset>
+	  <div class="control-group">
+	    <label class="control-label" for="user">Pinterest user:</label>
+	    <div class="controls">
+	      <input type="text" class="input-xlarge" id="user">
+	      <p class="help-inline"></p>
+	    </div>
+	  </div>
+	  <div id="form-remainder">
+	    <div class="control-group" id="board-select-div">
+	      <label class="control-label" for="board-select">Board:</label>
+	      <div class="controls">
+		<select id="board-select">							
+		</select>
+	      </div>
+	    </div>
+	    <div class="control-group" id="template-select-div">
+	      <label class="control-label" for="template-select">Device:</label>
+	      <div class="controls">
+		<select id="template-select">
+		  <option value="monitor">Monitor</option>
+		  <option value="iphone">iPhone 3G/3GS</option>
+		  <option value="iphone4">iPhone 4</option>
+		  <option value="ipad">iPad</option>
+		  <option value="ipad3">iPad 3</option>
+		</select>
+	      </div>
+	    </div>
+	    <div class="control-group" id="resolution-div">
+	      <label class="control-label">Screen resolution:</label>
+	      <Div class="controls">
+  		<input type="text" class="input-small" placeholder="Width" id="width">
+  		<input type="text" class="input-small" placeholder="Height" id="height">
+  		<p class="help-inline"></p>
+	      </div>
+	    </div>
+	    <div class="form-actions">
+	      <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+	      <span id="loading-message" class="help-block"></span>
+	    </div>
+	  </div>
+	</fieldset>
+      </form>
+      <div id="form-alert">
+	<!--<a class="close" data-dismiss="alert">×</a>-->
+	<span class="message"></span>
+      </div>
+      <div id="collage">
+      </div>
+      
+      <!--
+	  <footer>
+	    <p>&copy; Company 2012</p>
+	  </footer>
+	  -->
+      
+    </div> <!-- /container -->
+    
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/jquery-ui.custom.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+    <script id="board-select-option" type="text/x-jquery-tmpl">
+      <option value="${url}">${name}</option>
+    </script>
+    <script src="static/js/script.js"></script>
+    <script src="static/js/bootstrap-transition.js"></script>
+    <script src="static/js/bootstrap-alert.js"></script>
+    <script src="static/js/bootstrap-modal.js"></script>
+    <script src="static/js/bootstrap-dropdown.js"></script>
+    <script src="static/js/bootstrap-scrollspy.js"></script>
+    <script src="static/js/bootstrap-tab.js"></script>
+    <script src="static/js/bootstrap-tooltip.js"></script>
+    <script src="static/js/bootstrap-popover.js"></script>
+    <script src="static/js/bootstrap-button.js"></script>
+    <script src="static/js/bootstrap-collapse.js"></script>
+    <script src="static/js/bootstrap-carousel.js"></script>
+    <script src="static/js/bootstrap-typeahead.js"></script>
 
-			<fieldset>
-				<div class="control-group">
-					<label class="control-label" for="user">Pinterest user:</label>
-					<div class="controls">
-						<input type="text" class="input-xlarge" id="user">
-						<p class="help-inline"></p>
-					</div>
-				</div>
-				<div id="form-remainder">
-					<div class="control-group" id="board-select-div">
-						<label class="control-label" for="board-select">Board:</label>
-						<div class="controls">
-							<select id="board-select">							
-							</select>
-						</div>
-					</div>
-					<div class="control-group" id="template-select-div">
-						<label class="control-label" for="template-select">Device:</label>
-						<div class="controls">
-							<select id="template-select">
-								<option value="monitor">Monitor</option>
-								<option value="iphone">iPhone 3G/3GS</option>
-								<option value="iphone4">iPhone 4</option>
-								<option value="ipad">iPad</option>
-								<option value="ipad3">iPad 3</option>
-							</select>
-						</div>
-					</div>
-					<div class="control-group" id="resolution-div">
-						<label class="control-label">Screen resolution:</label>
-						<div class="controls">
-  							<input type="text" class="input-small" placeholder="Width" id="width">
-  							<input type="text" class="input-small" placeholder="Height" id="height">
-  							<p class="help-inline"></p>
-						</div>
-					</div>
-				  	<div class="form-actions">
-						<button type="submit" id="submit" class="btn btn-primary">Submit</button>
-						<span id="loading-message" class="help-block"></span>
-				  	</div>
-			  	</div>
-			</fieldset>
-		</form>
-		<div id="form-alert">
-			<!--<a class="close" data-dismiss="alert">×</a>-->
-			<span class="message"></span>
-		</div>
-		<div id="collage">
-		</div>
-		
-		<!--
-		<footer>
-			<p>&copy; Company 2012</p>
-		</footer>
-		-->
-	
-	</div> <!-- /container -->
-	
-	<!-- Le javascript
-	================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="static/js/jquery.min.js"></script>
-	<script src="static/js/jquery-ui.custom.min.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
-	<script id="board-select-option" type="text/x-jquery-tmpl">
-	    <option value="${url}">${name}</option>
-	</script>
-
-	<script type="text/javascript">
-	$(document).ready(function() {
-
-		var user_input = $('#user');
-
-		user_input.keypress(function(e) {
-			if (e.keyCode == 13) {
-				$(this).trigger('blur');
-				e.preventDefault();
-				return false;
-			}
-		});
-
-		user_input.blur(function() {
-			user = $('#user').val();
-			boards_url = '/user/boards/' + user
-			_this = $(this)
-			$.getJSON(boards_url, function(data) {
-				form_remainder = $('#form-remainder');
-				board_select = $('#board-select');
-				board_select.html(''); // clear board options from previous user
-				form_remainder.hide();
-				if (data['status'] == 'failure') {
-					// no user found
-					//$('#form-alert').show().attr('class', 'alert alert-error').find('span').html(data['message']);
-					_this.parent().parent().addClass('error')
-					_this.parent().find('p').html(data['message'])
-				}
-				else {
-					//$('#form-alert').hide().find('span').html("");
-					_this.parent().parent().removeClass('error')
-					_this.parent().find('p').html('')
-					var availableBoards = data['boards'];
-					$("#board-select-option").tmpl(availableBoards).appendTo(board_select);
-					form_remainder.show();
-				}
-			});
-		});
-
-		$('#template-select').change(function() {
-			if ($(this).val() == 'monitor') {
-				$('#resolution-div').show();
-			}
-			else {
-				$('#resolution-div').hide();
-			}
-
-		});
-
-		$('#submit').click(function() {
-			var user = $('#user').val();
-			var board = $('#board-select').val();
-			var template = $('#template-select').val();
-			var resolution = $('#resolution-div')
-
-			if (template == 'monitor') {
-				var width = $('#width').val();
-				var height = $('#height').val();
-				if (width == '' || height == '' || isNaN(width) || isNaN(height) || Number(height) == 0) {
-					resolution.addClass('error')
-					resolution.find('p').html('Please enter a valid height and width.')
-					return false;
-				}
-				else if (Number(width) < 200) {
-					resolution.addClass('error')
-					resolution.find('p').html('That width is too small.')
-					return false;
-				}
-				else {
-					resolution.removeClass('error')
-					resolution.find('p').html('')
-				}
-				template = template + '-' + width + 'x' + height
-			}
-			var seed = Math.floor(Math.random() * 101)
-			var verify_url = '/collage/verify/' + user + '/' + board + '/' + seed + '/' + template;
-			var show_url = '/collage/show/' + user + '/' + board + '/' + seed + '/'+ template;
-			var download_url = '/collage/download/' + user + '/' + board + '/' + seed + '/'+ template;
-			var collage = $('#collage');
-			var loading = $(this).parent().find('#loading-message').html("Loading ...");
-			alert(verify_url)
-			$.getJSON(verify_url, function(data) {
-				collage.html("");
-				loading.html("");
-				if (data['status'] == "failure") {
-					$('#form-alert').show().attr('class', 'alert alert-error').find('span').html(data['message']);
-				}
-				else {
-					if (data['message'] != "") {
-						$('#form-alert').show().attr('class', 'alert').find('span').html(data['message']);
-					}
-					else {
-						$('#form-alert').hide().find('span').html("");
-					}
-					var image_div = $('<div>').attr({'id': 'image-result', 'class': 'well'}).appendTo(collage);
-					var image_img = $('<img>').attr({'src': show_url}).appendTo(image_div);
-					image_div.append('<hr>')
-					var refresh_button = $('<button>').attr({'id': 'refresh', 'class': 'btn'}).html('Refresh').appendTo(image_div);
-					var save_button = $('<button>').attr({'id': 'save', 'class': 'btn'}).html('Save').appendTo(image_div);
-					refresh_button.click(function() {
-						$('#submit').trigger('click');
-					});
-					save_button.click(function() {
-						window.location = download_url
-					});
-  				}
-			});
-			
-			return false;
-		});
-	});
-	</script>
-	<script src="static/js/bootstrap-transition.js"></script>
-	<script src="static/js/bootstrap-alert.js"></script>
-	<script src="static/js/bootstrap-modal.js"></script>
-	<script src="static/js/bootstrap-dropdown.js"></script>
-	<script src="static/js/bootstrap-scrollspy.js"></script>
-	<script src="static/js/bootstrap-tab.js"></script>
-	<script src="static/js/bootstrap-tooltip.js"></script>
-	<script src="static/js/bootstrap-popover.js"></script>
-	<script src="static/js/bootstrap-button.js"></script>
-	<script src="static/js/bootstrap-collapse.js"></script>
-	<script src="static/js/bootstrap-carousel.js"></script>
-	<script src="static/js/bootstrap-typeahead.js"></script>
-
-</body>
+  </body>
 </html>
