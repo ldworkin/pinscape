@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd /home/lilidworkin/pinscape
+source venv/bin/activate
+exec gunicorn main:app -b localhost:8000
+

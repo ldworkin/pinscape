@@ -5,7 +5,7 @@ from cStringIO import StringIO
 import random
 import math
 import requests
-
+import re
 
 resolutions = {
 	'iphone4': {
@@ -34,6 +34,25 @@ resolutions = {
 	}
 }
 
+origurl = 'https://www.pinterest.com/resource/BoardFeedResource/get/?source_url=%2F{user}%2F{board}%2F&data=%7B%22options\
+%22%3A%7B%22board_id%22%3A%{boardid}%22%2C%22board_url%22%3A%22%2F{user}%2F{board}%2F%22%2C%22page_size%22%3Anu\
+ll%2C%22prepend%22%3Atrue%2C%22access%22%3A%5B%22write%22%2C%22delete%22%5D%2C%22board_layout%22%3A%22default%2\
+2%2C%22bookmarks%22%3A%5B%22{bookmark}%3D%3D%22%5D%7D%2C%22context%22%3A%7B%7D%7D&_=1425920710678'
+
+headers = {
+    'Pragma': 'no-cache',
+    'X-Pinterest-AppState': 'background',
+    'X-APP-VERSION': '77477f7',
+    'Accept-Encoding': 'gzip, deflate, sdch',
+    'Accept-Language': 'en-US,en;q=0.8',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.76 Safari/537.36',
+    'X-NEW-APP': '1',
+    'Accept': 'application/json, text/javascript, */*; q=0.01',
+    'Cache-Control': 'no-cache',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Connection': 'keep-alive',
+    'Referer': 'https://www.pinterest.com/'}
+
 def get_boards(user):
 	resp = requests.get('https://www.pinterest.com/%s' % user)
 	if resp.status_code != 200:
@@ -44,19 +63,35 @@ def get_boards(user):
                'url': board['href'].split('/')[2]} for board in board_divs]
 	return sorted(boards, key=lambda board: board['name'])
 
-def get_image_urls(user, board, seed):
-    resp = requests.get('https://www.pinterest.com/%s/%s' % (user, board))
+def get_image_urls(user, board, seed):    
+    resp = requests.get('https://www.pinterest.com/%s/%s/' % (user, board))
     if resp.status_code != 200:
         return None
-    soup = BeautifulSoup(resp.content)
-    # fullimages = soup.select('.pinImageWrapper')
-    # base_url = 'https://www.pinterest.com'
-    # fullurls = [base_url + image['href'] for image in images]
-    images = soup.select('.pinImg')
-    urls = [image['src'] for image in images]
+    r = resp.content
+    soup = BeautifulSoup(r)
+    pins = soup.select('.pinImg')
+    images = [image['src'] for image in pins]
+    for m in re.finditer('bookmarks": \["(.*?)"\]', r):
+        x = m.groups()[0]
+        if x != '-end-':
+            bookmark = x
+            break
+    for m in re.finditer('board_id": "(.*?)"', r):
+        x = m.groups()[0]
+        if x != '?{bid}':
+            boardid = x
+            break
+    boardid = '22'+boardid
+    while bookmark != '-end-':
+        url = origurl.format(user=user,board=board,boardid=boardid,bookmark=bookmark)
+        resp = requests.get(url, headers=headers)
+        j = resp.json()
+        pins = j['resource_response']['data']
+        images.extend([pins[i]['images']['236x']['url'] for i in range(len(pins))])
+        bookmark = j['resource']['options']['bookmarks'][0]
     random.seed(int(seed))
-    random.shuffle(urls)
-    return urls
+    random.shuffle(images)
+    return images
 
 def split_image_urls(urls, columns):
 	rows = []

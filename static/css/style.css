@@ -3,7 +3,6 @@ body {
 	padding-bottom: 40px;
 }
 
-
 .hero-unit img {
 	width: 300px;
 	padding-right: 30px;
@@ -15,9 +14,15 @@ body {
 	padding-top: 10px;
 }
 
+h1 {
+    font-family: "Lobster Two", cursive;
+    color: #990000 !important;
+}
+
 .clear {
 	clear: both;
 }
+
 #image-result {
 	text-align: center;
 }
