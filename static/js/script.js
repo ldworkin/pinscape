@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $('.dropdown-toggle').dropdown();
+
     var user_input = $('#user');
 
     user_input.keypress(function(e) {
