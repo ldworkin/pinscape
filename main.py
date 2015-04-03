@@ -42,7 +42,7 @@ def download(user, board, seed, preset):
     if not image_buffer:
         return None
     filename = '"%s-%s-%s-%s.png"' % (user, board, seed, preset)
-    response = make_response(serve_fileobj(image_buffer))
+    response = make_response(image_buffer.getvalue())
     response.headers['Content-Type']= 'image/png'
     response.headers['Content-Disposition'] = 'attachment; filename=' + filename
     return response

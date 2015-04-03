@@ -71,6 +71,7 @@ def get_image_urls(user, board, seed):
     soup = BeautifulSoup(r)
     pins = soup.select('.pinImg')
     images = [image['src'] for image in pins]
+    bookmark = '-end-'
     for m in re.finditer('bookmarks": \["(.*?)"\]', r):
         x = m.groups()[0]
         if x != '-end-':
