@@ -54,7 +54,7 @@ headers = {
     'Referer': 'https://www.pinterest.com/'}
 
 def get_boards(user):
-	resp = requests.get('https://www.pinterest.com/%s' % user)
+	resp = requests.get('https://www.pinterest.com/%s' % user, verify=False)
 	if resp.status_code != 200:
 		return None
 	soup = BeautifulSoup(resp.content)
@@ -64,7 +64,7 @@ def get_boards(user):
 	return sorted(boards, key=lambda board: board['name'])
 
 def get_image_urls(user, board, seed):    
-    resp = requests.get('https://www.pinterest.com/%s/%s/' % (user, board))
+    resp = requests.get('https://www.pinterest.com/%s/%s/' % (user, board), verify=False)
     if resp.status_code != 200:
         return None
     r = resp.content
@@ -84,7 +84,7 @@ def get_image_urls(user, board, seed):
     boardid = '22'+boardid
     while bookmark != '-end-':
         url = origurl.format(user=user,board=board,boardid=boardid,bookmark=bookmark)
-        resp = requests.get(url, headers=headers)
+        resp = requests.get(url, headers=headers, verify=False)
         j = resp.json()
         pins = j['resource_response']['data']
         images.extend([pins[i]['images']['236x']['url'] for i in range(len(pins))])
